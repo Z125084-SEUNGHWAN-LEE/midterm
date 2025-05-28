@@ -1,0 +1,411 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 1.2rem 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    padding-right: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+nav ul li {
+    margin-left: 30px;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+    display: block;
+}
+
+nav ul li a:hover {
+    color: #888;
+}
+
+/* ========================================= */
+/* 섹션 공통 스타일 (이전과 동일하게 유지) */
+/* ========================================= */
+.section {
+    padding: 80px 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ========================================= */
+/* ABOUT 섹션 (수정 및 추가) */
+/* ========================================= */
+#about.about-page-layout {
+    display: flex;
+    flex-direction: column; /* 모바일 우선: 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    text-align: left;
+    padding: 60px 20px; /* 섹션 자체의 패딩 조절 */
+    min-height: 100vh; /* 최소 화면 높이 */
+    justify-content: center; /* 세로 중앙 정렬 */
+}
+
+.about-left-content {
+    flex: 1; /* 남은 공간 차지 */
+    padding-right: 0; /* 모바일에서는 패딩 없음 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 중앙 정렬 */
+    align-items: flex-start;
+    padding-bottom: 50px; /* 모바일에서 하단 여백 */
+}
+
+.my-name {
+    font-size: 5em; /* 매우 큰 글씨 */
+    font-weight: bold;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    color: #333;
+    word-break: keep-all; /* 이름 줄바꿈 처리 */
+}
+
+.about-description {
+    font-size: 1.1em;
+    line-height: 1.7;
+    max-width: 600px; /* 설명 텍스트 최대 너비 */
+    margin-bottom: 40px;
+    color: #555;
+}
+
+.about-contact-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.about-contact-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.about-contact-links a:hover {
+    color: #888;
+}
+
+
+.about-right-visuals {
+    flex: 1; /* 남은 공간 차지 */
+    position: relative; /* 자식 요소 절대 위치 기준 */
+    min-height: 300px; /* 모바일에서 최소 높이 확보 */
+    width: 100%; /* 모바일에서 너비 100% */
+    display: flex;
+    flex-direction: column; /* 페이지네이션과 스택 세로 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    justify-content: center;
+}
+
+.visual-stack-container {
+    position: relative;
+    width: 120%;
+    max-width: 600px; /* 이미지 컨테이너 최대 너비 */
+    height: 400px; /* 스택 컨테이너의 고정 높이 */
+    margin: 0 auto;
+    overflow: visible; /* 이미지 넘침 방지 (초기 숨김) */
+}
+
+.visual-stack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none; /* 클릭 이벤트 방지 (이미지 위로 다른 요소들이 올 때) */
+}
+
+.about-visual {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) scale(var(--scale, 1)); /* 불규칙한 위치, 회전, 크기 */
+    max-width: 70%; /* 이미지 크기 조절 */
+    height: auto;
+    opacity: 0; /* 기본적으로 숨김 */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* 부드러운 전환 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* 그림자 */
+    border-radius: 8px; /* 약간 둥근 모서리 */
+    filter: brightness(0.8); /* 약간 어둡게 */
+}
+
+.about-visual.active {
+    opacity: 1; /* 활성화된 이미지 보이기 */
+    z-index: 10; /* 맨 위로 */
+    filter: brightness(1); /* 원래 밝기로 */
+}
+
+.about-visual:nth-child(1) { /* 각 이미지에 불규칙한 스타일 적용 */
+    --rotation: 10deg;
+    --scale: 0.9;
+    top: 45%; left: 55%;
+    max-width: 65%;
+}
+.about-visual:nth-child(2) {
+    --rotation: -15deg;
+    --scale: 1.1;
+    top: 55%; left: 45%;
+    max-width: 75%;
+}
+.about-visual:nth-child(3) {
+    --rotation: 5deg;
+    --scale: 0.8;
+    top: 40%; left: 40%;
+    max-width: 60%;
+}
+.about-visual:nth-child(4) {
+    --rotation: -8deg;
+    --scale: 1.0;
+    top: 60%; left: 50%;
+    max-width: 70%;
+}
+.about-visual:nth-child(5) {
+    --rotation: 12deg;
+    --scale: 0.95;
+    top: 50%; left: 60%;
+    max-width: 68%;
+}
+/* 더 많은 이미지를 추가하면 위와 같이 nth-child를 사용하여 스타일 정의 */
+
+
+.visual-pagination {
+    margin-top: 175px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.visual-pagination .current-slide {
+    color: #333;
+}
+
+
+/* ========================================= */
+/* WORKS & HOBBY 섹션 (이전과 동일하게 유지) */
+/* ========================================= */
+.portfolio-image-list, .hobby-image-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.portfolio-work-item, .hobby-item {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-out;
+}
+
+.portfolio-work-item img, .hobby-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.portfolio-work-item .overlay, .hobby-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translateY(100%);
+    transition: transform 0.4s ease-out;
+}
+
+.portfolio-work-item:hover .overlay, .hobby-item:hover .overlay {
+    transform: translateY(0);
+}
+
+.portfolio-work-item:hover img, .hobby-item:hover img {
+    transform: scale(1.05);
+}
+
+.portfolio-work-item .overlay h3, .hobby-item .overlay h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #ffd700;
+}
+
+.portfolio-work-item .overlay p, .hobby-item .overlay p {
+    font-size: 1em;
+    line-height: 1.5;
+    color: #eee;
+}
+
+.video-item {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+.video-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ========================================= */
+/* Footer (이전과 동일하게 유지) */
+/* ========================================= */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 0.9em;
+    margin-top: 80px;
+}
+
+
+/* ========================================= */
+/* 미디어 쿼리 (반응형 디자인) - ABOUT 섹션에 집중하여 수정 */
+/* ========================================= */
+
+/* 모바일 (Portrait) 및 작은 태블릿 */
+@media (max-width: 767px) {
+    #about.about-page-layout {
+        flex-direction: column; /* 세로 정렬 유지 */
+        padding: 40px 15px;
+        min-height: auto; /* 모바일에서는 뷰포트 높이에 맞출 필요 없음 */
+    }
+
+    .about-left-content {
+        padding-right: 0;
+        padding-bottom: 30px; /* 모바일에서 하단 여백 */
+    }
+
+    .my-name {
+        font-size: 3em; /* 모바일에서 글씨 크기 줄이기 */
+        margin-bottom: 20px;
+    }
+
+    .about-description {
+        font-size: 1em;
+        margin-bottom: 30px;
+    }
+
+    .about-contact-links {
+        justify-content: center; /* 모바일에서 중앙 정렬 */
+    }
+
+    .visual-stack-container {
+        height: 300px; /* 모바일에서 스택 컨테이너 높이 줄이기 */
+        max-width: 90%; /* 모바일에서 너비 조절 */
+    }
+
+    .about-visual {
+        max-width: 80%; /* 모바일에서 이미지 크기 조절 */
+    }
+
+    /* 모바일에서 이미지 불규칙성 조정 (원하는대로 조절) */
+    .about-visual:nth-child(1) { --rotation: 8deg; top: 40%; left: 50%; max-width: 70%; }
+    .about-visual:nth-child(2) { --rotation: -10deg; top: 60%; left: 45%; max-width: 75%; }
+    .about-visual:nth-child(3) { --rotation: 3deg; top: 50%; left: 55%; max-width: 65%; }
+    .about-visual:nth-child(4) { --rotation: -5deg; top: 45%; left: 40%; max-width: 60%; }
+    .about-visual:nth-child(5) { --rotation: 10deg; top: 55%; left: 60%; max-width: 68%; }
+}
+
+/* 태블릿 (Landscape) 및 데스크톱 */
+@media (min-width: 768px) {
+    #about.about-page-layout {
+        flex-direction: row; /* 데스크톱: 가로 정렬 */
+        justify-content: space-between; /* 양쪽 끝 정렬 */
+        align-items: center; /* 세로 중앙 정렬 */
+        padding: 80px 40px; /* 패딩 증가 */
+    }
+
+    .about-left-content {
+        padding-right: 80px; /* 오른쪽으로 여백 */
+        padding-bottom: 0;
+    }
+
+    .my-name {
+        font-size: 5em; /* 데스크톱 글씨 크기 유지 */
+    }
+
+    .about-description {
+        font-size: 1.1em;
+    }
+
+    .visual-stack-container {
+        height: 600px; /* 데스크톱에서 스택 컨테이너 높이 늘리기 */
+        max-width: 700px; /* 데스크톱에서 너비 조절 */
+    }
+
+    .about-visual {
+        max-width: 70%; /* 데스크톱에서 이미지 크기 유지 */
+    }
+}
